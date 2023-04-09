@@ -13,7 +13,7 @@ namespace HotelAPI2.Repositories
 			Discount = 0,
 			Management = 0,
 			Id = 1,
-			CreatedBy = new User() { Email="example@email.com" },
+			CreatedBy = 0,
 			CreatedTime = DateTime.UtcNow,
 			TotalCost = 0,
 			Transport = 0,
@@ -21,7 +21,7 @@ namespace HotelAPI2.Repositories
 			NoClients = 0,
 			PaymentNights = 0,
 			UpdatedTime = DateTime.UtcNow,
-			UpdatedBy = null,
+			UpdatedBy = 0,
 			Clients = Array.Empty<Client>(),
 			Room = new Room()
 		};

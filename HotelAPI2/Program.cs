@@ -1,4 +1,10 @@
+using HotelAPI2.Domain;
 using HotelAPI2.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -14,6 +20,22 @@ builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<ReservationRepository>();
 builder.Services.AddScoped<ReservationConfigurationRepository>();
+builder.Services.AddDbContext<HotelContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("StoreConnection")));
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+	options.TokenValidationParameters = new TokenValidationParameters()
+	{
+		ValidateIssuer = true,
+		ValidateAudience = true,
+		ValidateLifetime = true,
+		ValidateIssuerSigningKey = true,
+		ValidIssuer = builder.Configuration["Jwt:Issuer"],
+		ValidAudience = builder.Configuration["Jwt:Audience"],
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+
+
+	};
+});
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy(MyAllowSpecificOrigins,
@@ -25,7 +47,10 @@ builder.Services.AddCors(options =>
 						  });
 });
 var app = builder.Build();
-
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+	ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -37,6 +62,13 @@ if (!app.Environment.IsDevelopment())
 {
 	app.UseHttpsRedirection();
 }
+app.UseAuthentication();
+/*
+app.UseCors(x => x
+			.AllowAnyOrigin()
+			.AllowAnyMethod()
+			.AllowAnyHeader());
+*/
 
 app.UseCors(MyAllowSpecificOrigins);
 

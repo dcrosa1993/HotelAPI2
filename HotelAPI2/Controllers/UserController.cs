@@ -1,4 +1,6 @@
-﻿using HotelAPI2.Domain;
+﻿using HotelAPI2.Common;
+using HotelAPI2.Domain;
+using HotelAPI2.DTOs;
 using HotelAPI2.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,37 +18,37 @@ namespace HotelAPI2.Controllers
 		}
 		// GET: api/<UserController>
 		[HttpGet]
-		public IEnumerable<User> Get()
+		public Response<List<User>> Get(HotelContext hc)
 		{
-			return this._userRepository.GetAll();
+			return this._userRepository.GetAll(hc);
 		}
 
 		// GET api/<UserController>/5
 		[HttpGet("{id}")]
-		public User Get(int id)
+		public Response<User> Get(int id, HotelContext hc)
 		{
-			return this._userRepository.GetOne(id);
+			return this._userRepository.GetOne(id, hc);
 		}
 
 		// POST api/<UserController>
 		[HttpPost]
-		public User Post([FromBody] User value)
+		public Response<User> Post([FromBody] UserInput value, HotelContext hc)
 		{
-			return this._userRepository.AddUser(value);
+			return this._userRepository.AddUser(value, hc);
 		}
 
 		// PUT api/<UserController>/5
 		[HttpPut("{id}")]
-		public User Put(int id, [FromBody] User value)
+		public Response<User> Put(int id, [FromBody] UserInput value, HotelContext hc)
 		{
-			return this._userRepository.Edit(value, id);
+			return this._userRepository.Edit(value, id, hc);
 		}
 
 		// DELETE api/<UserController>/5
 		[HttpDelete("{id}")]
-		public User Delete(int id)
+		public Response<bool> Delete(int id, HotelContext hc)
 		{
-			return this._userRepository.Remove(id);
+			return this._userRepository.Remove(id, hc);
 		}
 	}
 }

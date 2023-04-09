@@ -7,10 +7,10 @@ namespace HotelAPI2.Repositories
 		private Room item = new Room()
 		{
 			Id = 1,
-			CreatedBy = null,
+			CreatedBy = 0,
 			CreatedTime = DateTime.UtcNow,
 			UpdatedTime = DateTime.UtcNow,
-			UpdatedBy = null,
+			UpdatedBy = 0,
 			Availability = true,
 			Capacity= 10,
 			Number="111",

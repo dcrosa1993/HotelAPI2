@@ -7,10 +7,10 @@ namespace HotelAPI2.Repositories
 		private Client item = new Client()
 		{
 			Id = 1,
-			CreatedBy = null,
+			CreatedBy = 0,
 			CreatedTime = DateTime.UtcNow,
 			UpdatedTime = DateTime.UtcNow,
-			UpdatedBy = null,
+			UpdatedBy = 0,
 			Age="Adult",
 			Email="example@gmail.com",
 			Name="Fulano de tal",

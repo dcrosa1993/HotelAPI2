@@ -8,10 +8,10 @@ namespace HotelAPI2.Repositories
 		private ReservationConfiguration item = new ReservationConfiguration()
 		{
 			Id = 1,
-			CreatedBy = null,
+			CreatedBy = 0,
 			CreatedTime = DateTime.UtcNow,
 			UpdatedTime = DateTime.UtcNow,
-			UpdatedBy = null,
+			UpdatedBy = 0,
 			AdvanceRequieredNigth = 0,
 			ManagerPartPerClient= 0,
 			MaxRoomClients= 0,

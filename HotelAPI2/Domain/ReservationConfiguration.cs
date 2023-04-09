@@ -1,9 +1,13 @@
 ﻿using HotelAPI2.Common;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace HotelAPI2.Domain
 {
 	public class ReservationConfiguration:AuditableBaseEntity
 	{
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 		public int AdvanceRequieredNigth { get; set; }
 		public int NigthCostUnder2Client { get; set; }
