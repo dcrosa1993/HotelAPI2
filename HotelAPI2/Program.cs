@@ -41,9 +41,9 @@ builder.Services.AddCors(options =>
 	options.AddPolicy(MyAllowSpecificOrigins,
 						  policy =>
 						  {
-							  policy.WithOrigins("http://localhost:4200", "https://v2.realtravelservices.com")
-												  .AllowAnyHeader()
-												  .AllowAnyMethod();
+							  policy.AllowAnyOrigin()
+									.AllowAnyHeader()
+									.AllowAnyMethod();
 						  });
 });
 var app = builder.Build();
