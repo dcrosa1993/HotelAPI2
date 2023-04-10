@@ -63,14 +63,14 @@ if (!app.Environment.IsDevelopment())
 	app.UseHttpsRedirection();
 }
 app.UseAuthentication();
-/*
+
 app.UseCors(x => x
 			.AllowAnyOrigin()
 			.AllowAnyMethod()
 			.AllowAnyHeader());
-*/
 
-app.UseCors(MyAllowSpecificOrigins);
+
+//app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
