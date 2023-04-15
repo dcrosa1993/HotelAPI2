@@ -1,4 +1,6 @@
-﻿using HotelAPI2.Domain;
+﻿using HotelAPI2.Common;
+using HotelAPI2.Domain;
+using HotelAPI2.DTOs;
 using HotelAPI2.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,37 +19,37 @@ namespace HotelAPI2.Controllers
 		} 
 		// GET: api/<RoomController>
 		[HttpGet]
-		public IEnumerable<Room> Get()
+		public Response<List<Room>> Get(HotelContext hc)
 		{
-			return this._roomRepository.GetAll();
+			return this._roomRepository.GetAll(hc);
 		}
 
 		// GET api/<RoomController>/5
 		[HttpGet("{id}")]
-		public Room Get(int id)
+		public Response<Room> Get(int id, HotelContext hc)
 		{
-			return this._roomRepository.GetOne(id);
+			return this._roomRepository.GetOne(id, hc);
 		}
 
 		// POST api/<RoomController>
 		[HttpPost]
-		public Room Post([FromBody] Room value)
+		public Response<Room> Post([FromBody] RoomInput value, HotelContext hc)
 		{
-			return this._roomRepository.AddRoom(value);
+			return this._roomRepository.AddRoom(value, hc);
 		}
 
 		// PUT api/<RoomController>/5
 		[HttpPut("{id}")]
-		public Room Put(int id, [FromBody] Room value)
+		public Response<Room> Put(int id, [FromBody] RoomInput value, HotelContext hc)
 		{
-			return this._roomRepository.Edit(value, id);
+			return this._roomRepository.Edit(value, id, hc);
 		}
 
 		// DELETE api/<RoomController>/5
 		[HttpDelete("{id}")]
-		public Room Delete(int id)
+		public Response<bool> Delete(int id, HotelContext hc)
 		{
-			return this._roomRepository.Remove(id);
+			return this._roomRepository.Remove(id, hc);
 		}
 	}
 }
