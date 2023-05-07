@@ -2,7 +2,10 @@
 using HotelAPI2.Domain;
 using HotelAPI2.DTOs;
 using HotelAPI2.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,28 +14,25 @@ namespace HotelAPI2.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class ReservationConfigurationController : ControllerBase
+	public class AuthController : ControllerBase
 	{
-		private ReservationConfigurationRepository _reservationConfigurationRepository;
-		public ReservationConfigurationController(ReservationConfigurationRepository rep)
+		private UserRepository _userRepository;
+		private IConfiguration _configuration;
+		public AuthController(UserRepository rep, IConfiguration configuration) {
+			this._userRepository = rep;
+			this._configuration = configuration;
+		}
+		
+
+		[HttpPost]
+		public IResult Post([FromBody] Credentials value, HotelContext hc, Mappers mappers)
 		{
-			this._reservationConfigurationRepository = rep;
+			return this._userRepository.Login(value, hc, _configuration, mappers);
 		}
 
-		// GET api/<ReservationConfigurationController>/5
-		[HttpGet()]
-		public Response<ReservationConfiguration> Get(HotelContext hc)
-		{
-			return _reservationConfigurationRepository.GetOne(hc);
-		}
-
-		// PUT api/<ReservationConfigurationController>/5
-		[HttpPut()]
-		public Response<ReservationConfiguration> Put([FromBody] ReservationConfigurationInput value, HotelContext hc)
-		{
-			return _reservationConfigurationRepository.Edit(value, GetLoggedInUser().Email, hc);
-		}
-
+		[HttpGet]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+		public LoggedInUser Get() => GetLoggedInUser();
 
 		protected LoggedInUser GetLoggedInUser()
 		{
@@ -49,8 +49,9 @@ namespace HotelAPI2.Controllers
 				userType = claims?.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
 				email = claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
 			}
-			return new LoggedInUser() { Email = email, Name = userId, Role = userType };
+			return new LoggedInUser() { Email=email, Name=userId, Role=userType};
 		}
+
 
 	}
 }

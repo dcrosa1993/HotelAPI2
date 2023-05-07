@@ -2,8 +2,7 @@
 {
 	public class Credentials
 	{
-		public Credentials() { }
-		public string email;
-		public string password;
+		public string Email { set; get; }
+		public string Password { set; get; }
 	}
 }

@@ -7,36 +7,15 @@ namespace HotelAPI2.Repositories
 {
 	public class RoomRepository
 	{
-		private Room item = new Room()
-		{
-			Id = 1,
-			CreatedBy = 0,
-			CreatedTime = DateTime.UtcNow,
-			UpdatedTime = DateTime.UtcNow,
-			UpdatedBy = 0,
-			Availability = true,
-			Capacity= 10,
-			Number="111",
-			Reservation=new Reservation()
-		};
-		public Response<Room> AddRoom(RoomInput res, HotelContext hc)
+		public Response<Room> AddRoom(Room res, HotelContext hc)
 		{
 			Response<Room> result = new Response<Room>();
-			Room room = new Room()
-			{
-				Number = res.Number,
-				Availability= res.Availability,
-				Capacity= res.Capacity,				
-				CreatedBy = 0,
-				UpdatedBy = 0,
-				UpdatedTime = DateTime.UtcNow,
-				CreatedTime = DateTime.UtcNow,
-
-			};
-			hc.Rooms.Add(room);
+			
+			hc.Rooms.Add(res);
 			if (hc.SaveChangesAsync().Result != 0)
 			{
-				result.Success = room;
+				
+				result.Success = res;
 			}
 			else
 			{
@@ -92,7 +71,7 @@ namespace HotelAPI2.Repositories
 			return result;
 		}
 
-		public Response<Room> Edit(RoomInput res, int id, HotelContext hc)
+		public Response<Room> Edit(RoomInput res, int id, string email, HotelContext hc)
 		{
 			Response<Room> result = new Response<Room>();
 			var room = hc.Rooms.FindAsync(id).Result;
@@ -103,7 +82,7 @@ namespace HotelAPI2.Repositories
 				room.UpdatedTime = DateTime.UtcNow;
 				room.Capacity = res.Capacity;
 				
-				room.UpdatedBy = 0;
+				room.UpdatedBy = email;
 
 				if (hc.SaveChangesAsync().Result != 0)
 				{

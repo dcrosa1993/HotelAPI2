@@ -49,8 +49,9 @@ namespace HotelAPI2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -71,10 +72,11 @@ namespace HotelAPI2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -93,8 +95,12 @@ namespace HotelAPI2.Migrations
                     b.Property<bool>("AdvanceManagement")
                         .HasColumnType("bit");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                    b.Property<double>("CostPerClient")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -121,11 +127,8 @@ namespace HotelAPI2.Migrations
                     b.Property<int>("PaymentNights")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int?>("RoomId")
                         .HasColumnType("int");
-
-                    b.Property<double>("TotalCost")
-                        .HasColumnType("float");
 
                     b.Property<int>("TotalNights")
                         .HasColumnType("int");
@@ -133,10 +136,11 @@ namespace HotelAPI2.Migrations
                     b.Property<double>("Transport")
                         .HasColumnType("float");
 
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -144,8 +148,7 @@ namespace HotelAPI2.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoomId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
                 });
@@ -161,8 +164,9 @@ namespace HotelAPI2.Migrations
                     b.Property<int>("AdvanceRequieredNigth")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -194,15 +198,36 @@ namespace HotelAPI2.Migrations
                     b.Property<int>("TransportCost")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ReservationsConfiguration");
+                    b.ToTable("ReservationConfiguration");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            AdvanceRequieredNigth = 0,
+                            CreatedBy = "admin@realtravelservices.com",
+                            CreatedTime = new DateTime(2023, 5, 7, 13, 24, 5, 440, DateTimeKind.Utc).AddTicks(2015),
+                            ManagerPartPerClient = 0,
+                            MaxRoomClients = 0,
+                            NigthCostFor3Client = 0,
+                            NigthCostMost4Client = 0,
+                            NigthCostUnder2Client = 0,
+                            NigthDiscountFor3Client = 0,
+                            NigthDiscountMost4Client = 0,
+                            NigthDiscountUnder2Client = 0,
+                            TransportCost = 0,
+                            UpdatedBy = "admin@realtravelservices.com",
+                            UpdatedTime = new DateTime(2023, 5, 7, 13, 24, 5, 440, DateTimeKind.Utc).AddTicks(2015)
+                        });
                 });
 
             modelBuilder.Entity("HotelAPI2.Domain.Room", b =>
@@ -219,8 +244,9 @@ namespace HotelAPI2.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -229,13 +255,14 @@ namespace HotelAPI2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReservationId")
+                    b.Property<int?>("ReservationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -257,8 +284,9 @@ namespace HotelAPI2.Migrations
                     b.Property<bool>("ChangePassword")
                         .HasColumnType("bit");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -283,15 +311,33 @@ namespace HotelAPI2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Baned = false,
+                            ChangePassword = false,
+                            CreatedBy = "admin@realtravelservices.com",
+                            CreatedTime = new DateTime(2023, 5, 7, 13, 24, 5, 440, DateTimeKind.Utc).AddTicks(1915),
+                            Email = "admin@realtravelservices.com",
+                            Name = "Admin Hotel Real",
+                            Password = "RealTravel2023",
+                            Phone = "00000000",
+                            Role = "admin",
+                            UpdatedBy = "admin@realtravelservices.com",
+                            UpdatedTime = new DateTime(2023, 5, 7, 13, 24, 5, 440, DateTimeKind.Utc).AddTicks(1919)
+                        });
                 });
 
             modelBuilder.Entity("HotelAPI2.Domain.UserAccess", b =>
@@ -302,8 +348,9 @@ namespace HotelAPI2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -312,30 +359,16 @@ namespace HotelAPI2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("UserAccesses");
-                });
-
-            modelBuilder.Entity("ReservationUser", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ReservationUser");
                 });
 
             modelBuilder.Entity("UserUserAccess", b =>
@@ -370,28 +403,13 @@ namespace HotelAPI2.Migrations
 
             modelBuilder.Entity("HotelAPI2.Domain.Reservation", b =>
                 {
-                    b.HasOne("HotelAPI2.Domain.Room", "Room")
-                        .WithOne("Reservation")
-                        .HasForeignKey("HotelAPI2.Domain.Reservation", "RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("ReservationUser", b =>
-                {
-                    b.HasOne("HotelAPI2.Domain.Reservation", null)
-                        .WithMany()
+                    b.HasOne("HotelAPI2.Domain.User", "User")
+                        .WithMany("Reservations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HotelAPI2.Domain.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("UserUserAccess", b =>
@@ -409,10 +427,9 @@ namespace HotelAPI2.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HotelAPI2.Domain.Room", b =>
+            modelBuilder.Entity("HotelAPI2.Domain.User", b =>
                 {
-                    b.Navigation("Reservation")
-                        .IsRequired();
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

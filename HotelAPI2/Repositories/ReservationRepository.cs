@@ -1,54 +1,146 @@
-﻿using HotelAPI2.Domain;
+﻿using HotelAPI2.Common;
+using HotelAPI2.Domain;
+using HotelAPI2.DTOs;
+using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Security.Cryptography.Xml;
+using System.Collections.Generic;
 
 namespace HotelAPI2.Repositories
 {
 	public class ReservationRepository
 	{
-		private Reservation item = new Reservation()
+		
+		public Response<ReservationsOutput> AddReservation(Reservation res, HotelContext hc, Mappers mappers)
 		{
-			AdvanceManagement = false,
-			DateIn = DateTime.UtcNow,
-			DateOut = DateTime.UtcNow,
-			Description = "Example",
-			Discount = 0,
-			Management = 0,
-			Id = 1,
-			CreatedBy = 0,
-			CreatedTime = DateTime.UtcNow,
-			TotalCost = 0,
-			Transport = 0,
-			TotalNights = 0,
-			NoClients = 0,
-			PaymentNights = 0,
-			UpdatedTime = DateTime.UtcNow,
-			UpdatedBy = 0,
-			Clients = Array.Empty<Client>(),
-			Room = new Room()
-		};
-		public Reservation AddReservation(Reservation res)
-		{
-			return item;
+			Response<ReservationsOutput> result = new Response<ReservationsOutput>();
+			
+			hc.Reservations.Add(res);
+			if (hc.SaveChangesAsync().Result != 0)
+			{
+				result.Success = mappers.mapReservation(res);
+			}
+			else
+			{
+				result.Error = true;
+				result.Message = "Error in operation";
+			}
+
+			return result;
 		}
 
 
-		public Reservation GetOne(int id){
-			return item;
+		public Response<ReservationsOutput> GetOne(int id, HotelContext hc, Mappers mappers)
+		{
+			Response<ReservationsOutput> result = new Response<ReservationsOutput>();
+			var reservation = hc.Reservations.Include("Clients").Where(x => x.Id == id).FirstOrDefaultAsync().Result;
+			if (reservation is Reservation)
+			{
+				result.Success = mappers.mapReservation(reservation);
+			}
+			else
+			{
+				result.Error = true;
+				result.Message = "Error in operation";
+			}
+			return result;
 		}
 
-		public Reservation Remove(int id)
+		public Response<bool> Remove(int id, HotelContext hc)
 		{
-			return item;
+			Response<bool> result = new Response<bool>();
+			var reservation = hc.Reservations.FindAsync(id).Result;
+			if (reservation is Reservation)
+			{
+				hc.Reservations.Remove(reservation);
+
+				if (hc.SaveChangesAsync().Result != 0)
+				{
+					result.Success = true;
+				}
+				else
+				{
+					result.Error = true;
+					result.Message = "Error in operation";
+				}
+
+			}
+			else
+			{
+				result.Error = true;
+				result.Message = "Error in operation";
+			}
+
+			return result;
 		}
 
-		public Reservation Edit(Reservation res, int id)
+		public Response<ReservationsOutput> Edit(Reservation res, int id,string email, HotelContext hc, Mappers mappers)
 		{
-			return item;
+			Response<ReservationsOutput> result = new Response<ReservationsOutput>();
+			var reservation = hc.Reservations.Include("Clients").Where(x=>x.Id==id).FirstOrDefaultAsync().Result;
+			if (reservation is Reservation)
+			{
+				reservation.AdvanceManagement = res.AdvanceManagement;
+				reservation.DateIn = res.DateIn;
+				reservation.DateOut = res.DateOut;
+				reservation.Description = res.Description;
+				reservation.Discount = res.Discount;
+				reservation.Management = res.Management;
+				reservation.NoClients = res.NoClients;
+				reservation.CostPerClient = res.CostPerClient;
+				reservation.Transport = res.Transport;
+				reservation.TotalNights = res.TotalNights;
+				reservation.PaymentNights = res.PaymentNights;
+				reservation.UpdatedTime = DateTime.UtcNow;
+				reservation.UpdatedBy = email;
+
+				if (hc.SaveChangesAsync().Result != 0)
+				{
+
+					result.Success = mappers.mapReservation(reservation);
+				}
+				else
+				{
+					result.Error = true;
+					result.Message = "Error in operation";
+				}
+
+			}
+			else
+			{
+				result.Error = true;
+				result.Message = "Error in operation";
+			}
+
+			return result;
 		}
 
-		public Reservation[] GetAll()
+		public Response<List<ReservationsOutput>> GetAll(HotelContext hc, Mappers mappers)
 		{
-			return new Reservation[] {item,item,item};
+			Response<List<ReservationsOutput>> result = new Response<List<ReservationsOutput>>();
+
+			
+			var reservations = hc.Reservations.Include("Clients").Include("User").ToListAsync().Result;
+			
+
+			if (reservations is List<Reservation>)
+			{
+				List<ReservationsOutput> reservarionOutput = new List<ReservationsOutput>();
+				foreach (Reservation reservation in reservations)
+				{
+					reservarionOutput.Add(mappers.mapReservation(reservation));
+				}
+				result.Success = reservarionOutput;
+			}
+			else
+			{
+				result.Error = true;
+				result.Message = "Error in operation";
+			}
+			return result;
 		}
+
+		
 
 	}
 

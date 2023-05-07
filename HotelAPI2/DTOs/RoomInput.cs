@@ -5,7 +5,7 @@ namespace HotelAPI2.DTOs
 {
 	public class RoomInput
 	{
-		public string Number { get; set; }
+		public string Number { get; set; } = string.Empty;
 		public int Capacity { get; set; }
 		public bool Availability { get; set; } = true;
 	}

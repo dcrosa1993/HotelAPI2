@@ -9,14 +9,14 @@ namespace HotelAPI2.Domain
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Email { get; set; }
-		public string Password { get; set; }
-		public string Phone { get; set; }
-		public string Role { get; set; }
+		public string Name { get; set; } = string.Empty;
+		public string Email { get; set; } = string.Empty;
+		public string Password { get; set; } = string.Empty;
+		public string Phone { get; set; } = string.Empty;
+		public string Role { get; set; } = string.Empty;
 		public bool Baned { get; set; } = false;
-		public virtual ICollection<UserAccess> UserAccess { get; set; }
+		public ICollection<UserAccess> UserAccess { get; set; } = new List<UserAccess>();
 		public bool ChangePassword { get; set; } = false;
-		public virtual ICollection<Reservation> Reservations { get; set; }
+		public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 	}
 }

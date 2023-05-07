@@ -1,3 +1,4 @@
+using HotelAPI2.Common;
 using HotelAPI2.Domain;
 using HotelAPI2.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +16,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<Mappers>();
 builder.Services.AddScoped<RoomRepository>();
 builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<UserRepository>();

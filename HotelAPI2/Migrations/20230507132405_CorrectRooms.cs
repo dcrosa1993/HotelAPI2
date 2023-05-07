@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HotelAPI2.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDb : Migration
+    public partial class CorrectRooms : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,9 +23,9 @@ namespace HotelAPI2.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: false)
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,7 +33,7 @@ namespace HotelAPI2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReservationsConfiguration",
+                name: "ReservationConfiguration",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -49,13 +49,13 @@ namespace HotelAPI2.Migrations
                     TransportCost = table.Column<int>(type: "int", nullable: false),
                     ManagerPartPerClient = table.Column<int>(type: "int", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: false)
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReservationsConfiguration", x => x.Id);
+                    table.PrimaryKey("PK_ReservationConfiguration", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,11 +67,11 @@ namespace HotelAPI2.Migrations
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
                     Availability = table.Column<bool>(type: "bit", nullable: false),
-                    ReservationId = table.Column<int>(type: "int", nullable: false),
+                    ReservationId = table.Column<int>(type: "int", nullable: true),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: false)
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,9 +86,9 @@ namespace HotelAPI2.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: false)
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,9 +109,9 @@ namespace HotelAPI2.Migrations
                     Baned = table.Column<bool>(type: "bit", nullable: false),
                     ChangePassword = table.Column<bool>(type: "bit", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: false)
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,7 +128,7 @@ namespace HotelAPI2.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateIn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOut = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalCost = table.Column<double>(type: "float", nullable: false),
+                    CostPerClient = table.Column<double>(type: "float", nullable: false),
                     Discount = table.Column<double>(type: "float", nullable: false),
                     TotalNights = table.Column<int>(type: "int", nullable: false),
                     PaymentNights = table.Column<int>(type: "int", nullable: false),
@@ -136,19 +136,19 @@ namespace HotelAPI2.Migrations
                     Transport = table.Column<double>(type: "float", nullable: false),
                     AdvanceManagement = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    RoomId = table.Column<int>(type: "int", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: true),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: false)
+                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservations_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
+                        name: "FK_Reservations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -201,29 +201,15 @@ namespace HotelAPI2.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ReservationUser",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReservationUser", x => new { x.UserId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_ReservationUser_Reservations_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Reservations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ReservationUser_Users_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.InsertData(
+                table: "ReservationConfiguration",
+                columns: new[] { "Id", "AdvanceRequieredNigth", "CreatedBy", "CreatedTime", "ManagerPartPerClient", "MaxRoomClients", "NigthCostFor3Client", "NigthCostMost4Client", "NigthCostUnder2Client", "NigthDiscountFor3Client", "NigthDiscountMost4Client", "NigthDiscountUnder2Client", "TransportCost", "UpdatedBy", "UpdatedTime" },
+                values: new object[] { -1, 0, "admin@realtravelservices.com", new DateTime(2023, 5, 7, 13, 24, 5, 440, DateTimeKind.Utc).AddTicks(2015), 0, 0, 0, 0, 0, 0, 0, 0, 0, "admin@realtravelservices.com", new DateTime(2023, 5, 7, 13, 24, 5, 440, DateTimeKind.Utc).AddTicks(2015) });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Baned", "ChangePassword", "CreatedBy", "CreatedTime", "Email", "Name", "Password", "Phone", "Role", "UpdatedBy", "UpdatedTime" },
+                values: new object[] { -1, false, false, "admin@realtravelservices.com", new DateTime(2023, 5, 7, 13, 24, 5, 440, DateTimeKind.Utc).AddTicks(1915), "admin@realtravelservices.com", "Admin Hotel Real", "RealTravel2023", "00000000", "admin", "admin@realtravelservices.com", new DateTime(2023, 5, 7, 13, 24, 5, 440, DateTimeKind.Utc).AddTicks(1919) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ClientReservation_ReservationsId",
@@ -231,15 +217,9 @@ namespace HotelAPI2.Migrations
                 column: "ReservationsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservations_RoomId",
+                name: "IX_Reservations_UserId",
                 table: "Reservations",
-                column: "RoomId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReservationUser_UsersId",
-                table: "ReservationUser",
-                column: "UsersId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserUserAccess_UsersId",
@@ -254,10 +234,10 @@ namespace HotelAPI2.Migrations
                 name: "ClientReservation");
 
             migrationBuilder.DropTable(
-                name: "ReservationsConfiguration");
+                name: "ReservationConfiguration");
 
             migrationBuilder.DropTable(
-                name: "ReservationUser");
+                name: "Rooms");
 
             migrationBuilder.DropTable(
                 name: "UserUserAccess");
@@ -273,9 +253,6 @@ namespace HotelAPI2.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Rooms");
         }
     }
 }
