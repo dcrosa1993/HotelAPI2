@@ -82,7 +82,7 @@ namespace HotelAPI2.Common
 				Discount = reservation.Discount,
 				Id = reservation.Id,
 				Management = reservation.Management,
-				NoClients = reservation.NoClients,
+				NoClients = reservation.Clients!.Count(),
 				PaymentNights = reservation.PaymentNights,
 				RoomId = reservation.RoomId,
 				TotalNights = reservation.TotalNights,
