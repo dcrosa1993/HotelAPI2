@@ -33,7 +33,7 @@ namespace HotelAPI2.Repositories
 		public Response<ReservationsOutput> GetOne(int id, HotelContext hc, Mappers mappers)
 		{
 			Response<ReservationsOutput> result = new Response<ReservationsOutput>();
-			var reservation = hc.Reservations.Include("Clients").Where(x => x.Id == id).FirstOrDefaultAsync().Result;
+			var reservation = hc.Reservations.Include("Clients").Include("User").Where(x => x.Id == id).FirstOrDefaultAsync().Result;
 			if (reservation is Reservation)
 			{
 				result.Success = mappers.mapReservation(reservation);
@@ -77,7 +77,7 @@ namespace HotelAPI2.Repositories
 		public Response<ReservationsOutput> Edit(Reservation res, int id,string email, HotelContext hc, Mappers mappers)
 		{
 			Response<ReservationsOutput> result = new Response<ReservationsOutput>();
-			var reservation = hc.Reservations.Include("Clients").Where(x=>x.Id==id).FirstOrDefaultAsync().Result;
+			var reservation = hc.Reservations.Include("Clients").Include("User").Where(x=>x.Id==id).FirstOrDefaultAsync().Result;
 			if (reservation is Reservation)
 			{
 				reservation.AdvanceManagement = res.AdvanceManagement;

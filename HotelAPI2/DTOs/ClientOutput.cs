@@ -12,5 +12,6 @@ namespace HotelAPI2.DTOs
 		public string Phone { get; set; }
 		public string Age { get; set; } = "adult";
 		public ICollection<Reservation>? Reservations { get; set; } 
+
 	}
 }
