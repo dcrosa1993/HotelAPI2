@@ -140,7 +140,34 @@ namespace HotelAPI2.Repositories
 			return result;
 		}
 
-		
+		public Response<List<ReservationsOutput>> GetCurrentReservations(HotelContext hc, Mappers mappers)
+		{
+			Response<List<ReservationsOutput>> result = new Response<List<ReservationsOutput>>();
+
+
+			var currentDate = DateTime.Today;
+
+			var reservations = hc.Reservations.Include("Clients").Include("User").Where(reservation => reservation.DateOut.Date >= currentDate).ToListAsync().Result;
+
+
+			if (reservations is List<Reservation>)
+			{
+				List<ReservationsOutput> reservarionOutput = new List<ReservationsOutput>();
+				foreach (Reservation reservation in reservations)
+				{
+					reservarionOutput.Add(mappers.mapReservation(reservation));
+				}
+				result.Success = reservarionOutput;
+			}
+			else
+			{
+				result.Error = true;
+				result.Message = "Error in operation";
+			}
+			return result;
+		}
+
+
 
 	}
 

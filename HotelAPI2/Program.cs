@@ -1,3 +1,5 @@
+using DinkToPdf.Contracts;
+using DinkToPdf;
 using HotelAPI2.Common;
 using HotelAPI2.Domain;
 using HotelAPI2.Repositories;
@@ -15,6 +17,7 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<Mappers>();
 builder.Services.AddScoped<RoomRepository>();
