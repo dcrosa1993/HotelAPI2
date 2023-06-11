@@ -115,13 +115,17 @@ namespace HotelAPI2.Repositories
 			return result;
 		}
 
-		public Response<List<ReservationsOutput>> GetAll(HotelContext hc, Mappers mappers)
+		public Response<List<ReservationsOutput>> GetAll(HotelContext hc, Mappers mappers, LoggedInUser user)
 		{
 			Response<List<ReservationsOutput>> result = new Response<List<ReservationsOutput>>();
-
-			
-			var reservations = hc.Reservations.Include("Clients").Include("User").ToListAsync().Result;
-			
+			var reservations = new List<Reservation>();
+			if (user.Role == "admin")
+			{
+				reservations = hc.Reservations.Include("Clients").Include("User").ToListAsync().Result;
+			}else if(user.Role == "manager")
+			{
+				reservations = hc.Reservations.Where(x=>x.User.Email==user.Email).Include("Clients").Include("User").ToListAsync().Result;
+			}
 
 			if (reservations is List<Reservation>)
 			{

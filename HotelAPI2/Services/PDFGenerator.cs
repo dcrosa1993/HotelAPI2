@@ -1,11 +1,9 @@
-﻿using DinkToPdf;
-using DinkToPdf.Contracts;
-using HotelAPI2.Domain;
+﻿
 using HotelAPI2.DTOs;
 
 public class PDFGenerator
 {
-	public string GenerateHtmlContent(ReservationsOutput reservation)
+    public string GenerateHtmlContent(ReservationsOutput reservation)
 	{
 		// Genera el contenido HTML del PDF utilizando una plantilla o código HTML
 		// Puedes usar una librería de plantillas como RazorEngine o generar el HTML manualmente
